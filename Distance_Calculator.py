@@ -27,20 +27,3 @@ class Distance_Calculator:
             if (index+1) != df_Postcodes.shape[0]:
                 string += "|"
         return(string)
-
-
-
-
-
-
-
-# def create_final_destination_string(final_postcode_dataframe):
-#
-#     destination = ''
-#     for idx, postcode in enumerate(final_postcode_dataframe.Postcode):
-#         if (idx + 1) != final_postcode_dataframe.shape[0]:
-#             destination += postcode.replace(" ","+") + "House+of+Fraser" + '|'
-#         else :
-#             destination += postcode.replace(" ","+") + 'House+of+Fraser'
-#
-#     return(destination)
