@@ -1,14 +1,16 @@
-#import urllib.request
+import requests
 import json
+from   api_key_file import api_key
 import pandas as pd
-import numpy as np
-from operator import itemgetter
+import numpy  as np
+#from operator import itemgetter
 
 #import api_key_file
 
 class Distance_Calculator:
+
     def hello_world_method(self):
-        print("hello world")
+        return("hello world")
 
     def read_postcodes(self,postcodes_csv):
         df_postcodes = pd.read_csv(postcodes_csv)
@@ -34,6 +36,8 @@ class Distance_Calculator:
                           "PA34" : 'OBAN+PA34',
                           "PH41" : 'MALLAIG+PH41'}
 
+### Add a method that stores origins and destinations
+
     def create_full_string_for_request(self,
                                        origin_addresses,
                                        destination_addresses,
@@ -50,7 +54,7 @@ class Distance_Calculator:
         addresses = self.read_postcodes(addresses_file)
         addresses = self.transform_postcode_into_google_readable(addresses)
         return(addresses)
-    
+
     def concatenate_method(self,
                            origins_file,
                            destinations_file,
@@ -62,6 +66,13 @@ class Distance_Calculator:
                                                                     destination_addresses,
                                                                     api_key)
         return(navigation_request)
+
+    def call_google_maps(self, navigation_request):
+        response   = requests.get(navigation_request)
+        directions = response.json()
+        return(directions)
+
+
 
 #    def concatenate_methods():
 #        a = transform_postcode_into_google_readable(whatever)
