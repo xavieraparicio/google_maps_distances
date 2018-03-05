@@ -72,6 +72,42 @@ class Distance_Calculator:
         directions = response.json()
         return(directions)
 
+    def extract_variables_from_response(self,
+                                       json_response,
+                                       variable_to_extract,
+                                       origin_addresses):
+        
+        dictionary  = {}
+        origin_list = origin_addresses['Postcodes'].tolist() ## Need to make that more general
+        for index, response in enumerate(json_response):
+            try:
+                origin             = origin_list[index]
+                variable_list     = []
+                for route in response['elements']:
+                    variable_list.append(route[variable_to_extract]['value'])
+                    dictionary[origin] = variable_list
+            except Exception:
+                pass
+        return (dictionary)
+
+
+    def create_dataframe_from_response(self, 
+                                       directions, 
+                                       variable_to_extract,
+                                       origin_addresses,
+                                       destination_addresses):
+
+        json_response = directions['rows']
+        dictionary    = self.extract_variables_from_response(json_response,
+                                                             variable_to_extract,
+                                                             origin_addresses)
+        dataframe     = pd.DataFrame(dictionary, index = destination_addresses['Postcodes'].tolist())        
+
+        return (dataframe)
+
+
+
+
 
 
 #    def concatenate_methods():
